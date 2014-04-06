@@ -54,8 +54,8 @@ def grep(source, search_term):
     for (token_type,
          token_string,
          start,
-         end,
-         line) in tokenize.generate_tokens(sio.readline):
+         _,
+         __) in tokenize.generate_tokens(sio.readline):
 
         if (
             token_type == tokenize.STRING and
