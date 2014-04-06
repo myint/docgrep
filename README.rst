@@ -18,7 +18,7 @@ Example
 
 ::
 
-    $ docgrep -r 'Python 3.4' .
+    $ docgrep 'Python 3.4' .
     ./asyncio/futures.py:113: """This class is *almost* compatible with concurrent.futures.Future.
 
         Differences:

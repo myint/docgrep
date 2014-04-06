@@ -109,8 +109,6 @@ def _main(argv, standard_out, standard_error):
     parser = argparse.ArgumentParser(description=__doc__, prog='docgrep')
     parser.add_argument('--version', action='version',
                         version='%(prog)s ' + __version__)
-    parser.add_argument('-r', '--recursive', action='store_true',
-                        help='drill down directories recursively')
     parser.add_argument('search_term',
                         help='term to search for')
     parser.add_argument('paths', nargs='*',
@@ -124,7 +122,7 @@ def _main(argv, standard_out, standard_error):
     filenames = list(set(args.paths))
     while filenames:
         name = filenames.pop(0)
-        if args.recursive and os.path.isdir(name):
+        if os.path.isdir(name):
             for root, directories, children in os.walk(unicode(name)):
                 filenames += [os.path.join(root, f) for f in children
                               if f.endswith('.py') and
