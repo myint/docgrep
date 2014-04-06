@@ -36,7 +36,7 @@ import sys
 import tokenize
 
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 
 try:
@@ -71,12 +71,6 @@ def grep(source, search_term):
         previous_token_type = token_type
 
 
-def open_with_encoding(filename, encoding, mode='r'):
-    """Return opened file with a specific encoding."""
-    return io.open(filename, mode=mode, encoding=encoding,
-                   newline='')  # Preserve line endings
-
-
 def detect_encoding(filename):
     """Return file encoding."""
     try:
@@ -85,7 +79,7 @@ def detect_encoding(filename):
             encoding = lib2to3_tokenize.detect_encoding(input_file.readline)[0]
 
             # Check for correctness of encoding.
-            with open_with_encoding(filename, encoding) as input_file:
+            with io.open(filename, encoding=encoding) as input_file:
                 input_file.read()
 
         return encoding
@@ -96,7 +90,7 @@ def detect_encoding(filename):
 def grep_file(filename, args, standard_out):
     """Run grep() on a file."""
     encoding = detect_encoding(filename)
-    with open_with_encoding(filename, encoding=encoding) as input_file:
+    with io.open(filename, encoding=encoding) as input_file:
         source = input_file.read()
         for start, docstring in grep(source, args.search_term):
             print('{}:{}: {}'.format(filename, start[0], docstring),
